@@ -28,3 +28,10 @@ Cara mengimplementasikan checklist:
     urlpatterns = [
         path('', show_main, name='show_main'),
     ]
+
+
+![](./Tugas%202/models.py.png "Bagan Django")
+
+Virtual environment digunakan untuk mengisolasi package serta dependencies dari aplikasi sehingga tidak bertabrakan dengan proyek-proyek lain yang ada pada komputer. Kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment namun hal ini beresiko karena terpengaruh dependensi dari proyek-proyek lainnya.
+
+MVC (Model-View-Controller) memisahkan Model dengan View dan Controller, pengembangan Model tidak mempengaruhi tampilan dan sebaliknya juga berlaku. MVT (Model-View-Template) menggunakan Template untuk mengatur tampilan dan presentasi data. MVVM (Model-View-ViewModel) digunakan dalam pengembangan aplikasi berbasis klien (JavaScript) karena memungkinkan pengembangan tampilan yang lebih dinamis dan reaktif.
