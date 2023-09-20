@@ -1,5 +1,152 @@
 # Tugas 3
 
+## Membuat input form untuk menambahkan objek model pada app sebelumnya.
+1. Buat berkas baru pada direktori main dengan nama forms.py untuk membuat struktur form yang dapat menerima data item baru. Tambahkan kode berikut ke dalam berkas forms.py.
+```
+from django.forms import ModelForm
+from main.models import Item
+
+class ItemForm(ModelForm):
+    class Meta:
+        model = Item
+        fields = ["name", "amount", "description"]
+```
+2. Menambahkan fungsi import berikut ke views.py di main
+```
+from django.http import HttpResponseRedirect
+from main.forms import ProductForm
+from django.urls import reverse
+```
+3. Buat fungsi create_product di views.py yang menerima parameter request untuk menambah item secara otomatis ketika di-submit
+```
+def create_product(request):
+    form = ItemForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "create_product.html", context)
+```
+4. Ubah fungsi show_main yang sudah ada pada berkas views.py
+```
+def show_main(request):
+    items = Item.objects.all()
+    context = {
+        'name': 'Daffa Al Fathan Zaki',
+        'class': 'PBP A',
+        'items': items,
+    }
+
+    return render(request, "main.html", context)
+```
+Fungsi Item.objects.all() digunakan untuk mengambil seluruh object Item yang tersimpan pada database.
+
+5. Import fungsi create_product dan tambahkan path url ke urlpatterns di urls.py di main
+```
+from main.views import show_main, create_product
+```
+```
+path('create-product', create_product, name='create_product'),
+```
+
+6. Buat berkas HTML baru dengan nama create_product.html pada direktori main/templates untuk membuat tampilan form saat user menginput data baru
+```
+{% extends 'base.html' %} 
+
+{% block content %}
+<h1>Add New Item</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Add Item"/>
+            </td>
+        </tr>
+    </table>
+</form>
+
+{% endblock %}
+```
+
+## Melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID.
+**HTML**
+Modifikasi main.html dalam block content agar bisa menampilkan data baru
+```
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Description</th>
+        <th>Date Added</th>
+    </tr>
+
+    {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
+
+    {% for item in items %}
+        <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.date_added}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<br />
+
+<a href="{% url 'main:create_product' %}">
+    <button>
+        Add New Item
+    </button>
+</a>
+```
+
+**XML dan JSON**
+Tambahkan fungsi show_xml dan show_json di views.py di main yang masing-masing akan mereturn HTTPResponse menjadi XML/JSON
+```
+def show_xml(request):
+    data = Item.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def show_json(request):
+    data = Item.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+```
+
+**XML by ID dan JSON by ID**
+Tambahkan fungsi show_xml_by_id dan show_json_by_id di views.py di main yang masing-masing akan mereturn HTTPResponse menjadi XML/JSON tetapi hanya salah satu ID
+```
+def show_xml_by_id(request, id):
+    data = Item.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+def show_json_by_id(request, id):
+    data = Item.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+```
+
+**Menambah path masing-masing fungsi di urls.py di main**
+```
+from django.urls import path
+from main.views import show_main, create_product, show_xml, show_json, show_xml_by_id, show_json_by_id
+
+app_name = 'main'
+
+urlpatterns = [
+    path('', show_main, name='show_main'),
+    path('create-product', create_product, name='create_product'),
+    path('xml/', show_xml, name='show_xml'),
+    path('json/', show_json, name='show_json'),
+    path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),
+]
+```
 ## Perbedaan antara form POST dan form GET dalam Django
 Dalam Django, seperti dalam web development pada umumnya, terdapat dua metode HTTP yang umum digunakan untuk mengirim data dari sebuah form ke server: POST dan GET. Berikut adalah perbedaan utama antara keduanya:
 
