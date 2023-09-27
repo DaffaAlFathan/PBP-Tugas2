@@ -106,7 +106,8 @@ def dec_item(request, id):
             item.save()
             return HttpResponseRedirect(reverse('main:show_main'))
         elif item.amount == 1:
-            delete_item(request, id)
+            item.delete()
+            return HttpResponseRedirect(reverse('main:show_main'))
 
 def delete_item(request, id):
     if request.method == "GET":

@@ -182,6 +182,84 @@ path('logout/', logout_user, name='logout'),
 ...
 ```
 
+## Menghubungkan model Item dengan User
+1. Di models.py pada direktori main, import User.
+```
+...
+from django.contrib.auth.models import User
+...
+```
+2. Tambahkan kode berikut pada model Item untuk menghubungkan satu Item dengan satu user.
+```
+class Product(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ...
+```
+3. Ubah potongan kode fungsi create_product di views.py di main menjadi seperti berikut.
+```
+def create_product(request):
+ form = ProductForm(request.POST or None)
+
+ if form.is_valid() and request.method == "POST":
+     product = form.save(commit=False)
+     product.user = request.user
+     product.save()
+     return HttpResponseRedirect(reverse('main:show_main'))
+ ...
+```
+4. Ubah potongan kode fungsi show_main menjadi seperti berikut.
+```
+def show_main(request):
+    products = Product.objects.filter(user=request.user)
+
+    context = {
+        'name': request.user.username,
+    ...
+...
+```
+5. Tidak lupa untuk migrasi model karena model telah diubah.
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+## Menampilkan detail informasi pengguna dan menerapkan cookies
+1. Di views.py pada direktori main, import datetime.
+```
+import datetime
+```
+2. Ubah potongan kode fungsi login_user untuk menambahkan cookie.
+```
+...
+if user is not None:
+    login(request, user)
+    response = HttpResponseRedirect(reverse("main:show_main")) 
+    response.set_cookie('last_login', str(datetime.datetime.now()))
+    return response
+...
+```
+3. Tambahkan key dan value berikut di context pada show_main.
+```
+'last_login': request.COOKIES['last_login']
+```
+4. Ubah potongan kode fungsi logout_user untuk menghapus cookie.
+```
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse('main:login'))
+    response.delete_cookie('last_login')
+    return response
+```
+5. Terakhir, tampilkan last_login pada main.html
+```
+...
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+...
+```
+
+## Dummy Accounts
+![](./Tugas%202/dummy_thorfinn.png)
+![](./Tugas%202/dummy_kirito.png)
 # Tugas 3
 
 ## Membuat input form untuk menambahkan objek model pada app sebelumnya.
