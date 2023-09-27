@@ -260,6 +260,24 @@ def logout_user(request):
 ## Dummy Accounts
 ![](./Tugas%202/dummy_thorfinn.png)
 ![](./Tugas%202/dummy_kirito.png)
+
+## Django UserCreationForm, kelebihan dan kekurangannya
+UserCreationForm adalah salah satu formulir bawaan dari Django yang dirancang untuk pembuatan pengguna dalam aplikasi web.
+Kelebihan: Mudah digunakan dan validasi otomatis.
+Kekurangan: Keterbatasan fungsi dan tampilan HTML yang terbatas.
+
+## Perbedaan antara autentikasi dan otorisasi dalam konteks Django dan alasan keduanya penting.
+Autentikasi adalah proses verifikasi siapakah user yang masuk ke dalam sistem.
+Otorisasi adalah proses verifikasi apakah user memiliki akses tertentu dalam aplikasi.
+Keduanya penting karena mereka menjaga keamanan, privasi data, serta kontrol akses.
+
+## Apa itu cookies dalam konteks aplikasi web, dan bagaimana Django menggunakan cookies untuk mengelola data sesi pengguna
+Cookies adalah data kecil yang disimpan di sisi klien (pada perangkat pengguna) oleh server web saat pengguna mengunjungi sebuah situs web. Cookies digunakan untuk menyimpan informasi khusus dalam bentuk pasangan "nama-nilai" yang dapat diakses oleh server web dan perangkat pengguna.
+
+Django menggunakan cookies untuk mengelola data sesi pengguna dengan bantuan komponen yang disebut "session framework". Cara kerjanya yaitu pengaturan cookie, penyimpanan dan pemulihan data sesi, serta penyimpanan aman.
+
+## Keamanan cookie
+Penggunaan cookies dalam pengembangan web dapat aman jika diimplementasikan dengan baik dan dengan mempertimbangkan berbagai faktor keamanan. Namun, ada beberapa risiko seperti data interception, XSS, CSRF, pencurian cookie, user tracking, dan cookie expiration.
 # Tugas 3
 
 ## Membuat input form untuk menambahkan objek model pada app sebelumnya.
