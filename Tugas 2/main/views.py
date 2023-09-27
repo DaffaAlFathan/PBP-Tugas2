@@ -18,10 +18,17 @@ def show_main(request):
         'name': request.user.username,
         'class': 'PBP A',
         'items': items,
+        'type_count': item_type_count(items),
         'last_login': request.COOKIES['last_login'],
     }
 
     return render(request, "main.html", context)
+
+def item_type_count(items):
+    count = 0
+    for item in items:
+        count += 1
+    return count
 
 def create_product(request):
     form = ItemForm(request.POST or None)
@@ -83,3 +90,26 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def inc_item(request, id):
+    if request.method == "GET":
+        item = Item.objects.get(pk=id)
+        item.amount += 1
+        item.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+def dec_item(request, id):
+    if request.method == "GET":
+        item = Item.objects.get(pk=id)
+        if item.amount > 1:
+            item.amount -= 1
+            item.save()
+            return HttpResponseRedirect(reverse('main:show_main'))
+        elif item.amount == 1:
+            delete_item(request, id)
+
+def delete_item(request, id):
+    if request.method == "GET":
+        item = Item.objects.get(pk=id)
+        item.delete()
+        return HttpResponseRedirect(reverse('main:show_main'))

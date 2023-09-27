@@ -1,3 +1,73 @@
+# Tugas 4
+
+## Mengimplementasikan fungsi registrasi, login, dan logout.
+1. Di views.py pada direktori main, import redirect, UserCreationForm, dan messages.
+```
+from django.shortcuts import redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages  
+```
+2. Tambahkan fungsi register yang menerima parameter request, dan diisi dengan kode berikut.
+```
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)
+```
+Setelah user berhasil mendaftar, akan diarahkan ke halaman login.
+3. Buat berkas baru bernama register.html pada main/templates untuk menampilkan halaman register.
+```
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Register</title>
+{% endblock meta %}
+
+{% block content %}  
+
+<div class = "login">
+    
+    <h1>Register</h1>  
+
+        <form method="POST" >  
+            {% csrf_token %}  
+            <table>  
+                {{ form.as_table }}  
+                <tr>  
+                    <td></td>
+                    <td><input type="submit" name="submit" value="Daftar"/></td>  
+                </tr>  
+            </table>  
+        </form>
+
+    {% if messages %}  
+        <ul>   
+            {% for message in messages %}  
+                <li>{{ message }}</li>  
+                {% endfor %}  
+        </ul>   
+    {% endif %}
+
+</div>  
+
+{% endblock content %}
+```
+4. Import fungsi register dan tambahkan path url ke urlpatterns di urls.py di main
+```
+from main.views import register
+```
+```
+...
+path('register/', register, name='register'),
+...
+```
 # Tugas 3
 
 ## Membuat input form untuk menambahkan objek model pada app sebelumnya.
