@@ -1,6 +1,8 @@
 # Tugas 4
 
 ## Mengimplementasikan fungsi registrasi, login, dan logout.
+
+### Register
 1. Di views.py pada direktori main, import redirect, UserCreationForm, dan messages.
 ```
 from django.shortcuts import redirect
@@ -68,6 +70,118 @@ from main.views import register
 path('register/', register, name='register'),
 ...
 ```
+
+### Login
+1. Di views.py pada direktori main, import authenticate dan login.
+```
+from django.contrib.auth import authenticate, login
+```
+2. Tambahkan fungsi login_user yang menerima parameter request, dan diisi dengan kode berikut.
+```
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('main:show_main')
+        else:
+            messages.info(request, 'Sorry, incorrect username or password. Please try again.')
+    context = {}
+    return render(request, 'login.html', context)
+```
+Ini bertujuan untuk mengautentikasi pengguna yang ingin login.
+3. Buat berkas baru bernama login.html pada main/templates untuk menampilkan halaman login.
+```
+{% extends 'base.html' %}
+
+{% block meta %}
+    <title>Login</title>
+{% endblock meta %}
+
+{% block content %}
+
+<div class = "login">
+
+    <h1>Login</h1>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Username: </td>
+                <td><input type="text" name="username" placeholder="Username" class="form-control"></td>
+            </tr>
+                    
+            <tr>
+                <td>Password: </td>
+                <td><input type="password" name="password" placeholder="Password" class="form-control"></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><input class="btn login_btn" type="submit" value="Login"></td>
+            </tr>
+        </table>
+    </form>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}     
+        
+    Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
+
+</div>
+
+{% endblock content %}
+```
+4. Import fungsi login_user dan tambahkan path url ke urlpatterns di urls.py di main
+```
+from main.views import login_user
+```
+```
+...
+path('login/', login_user, name='login'),
+...
+```
+
+### Logout
+1. Di views.py pada direktori main, import logout.
+```
+from django.contrib.auth import logout
+```
+2. Tambahkan fungsi logout_user yang menerima parameter request, dan diisi dengan kode berikut.
+```
+def logout_user(request):
+    logout(request)
+    return redirect('main:login')
+```
+Ini bertujuan untuk logout dan kembali ke halaman login.
+3. Buka main.html pada main/templates dan isi kode berikut setelah Add New Item.
+```
+...
+<a href="{% url 'main:logout' %}">
+    <button>
+        Logout
+    </button>
+</a>
+...
+```
+4. Import fungsi logout_user dan tambahkan path url ke urlpatterns di urls.py di main
+```
+from main.views import logout_user
+```
+```
+...
+path('logout/', logout_user, name='logout'),
+...
+```
+
 # Tugas 3
 
 ## Membuat input form untuk menambahkan objek model pada app sebelumnya.
