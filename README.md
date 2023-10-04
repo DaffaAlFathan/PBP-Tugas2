@@ -38,7 +38,7 @@ Bootstrap sebaiknya digunakan saat masih pemula, atau hanya menginginkan tampila
 <button class="btn btn-success" type="button">
 ```
 
-3. Membuat elemen th dan td menjadi berada di tengah.
+3. Membuat elemen th dan td di templates/main.html menjadi berada di tengah.
 ```
     <th style='text-align:center; vertical-align:middle'>
     <td style='text-align:center; vertical-align:middle'>
