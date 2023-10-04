@@ -1,3 +1,54 @@
+# Tugas 5
+## Manfaat dari setiap element selector dan kapan waktu yang tepat untuk menggunakannya.
+Element Selector memungkinkan kita mengubah properti untuk semua elemen yang memiliki tag HTML yang sama. Salah satu contoh yang paling berguna adalah saat kita ingin membuat seluruh elemen th dan td masing-masing memiliki properti yang sama.
+
+## HTML5 Tags
+1. <header> digunakan untuk mendefinisikan header dari dokumen karena berkaitan dengan judul dan awalan.
+2. <nav> digunakan untuk membuat bar navigasi di bagian atas.
+3. <aside> digunakan untuk membuat konten di bagian samping.
+4. <footer> digunakan untuk membuat konten di bagian bawah.
+
+## Perbedaan antara margin dan padding.
+Margin mengosongkan area di sekitar border, sedangkan padding mengosongkan area di sekitar konten.
+
+## Perbedaan antara framework CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya
+Bootstrap biasanya menghasilkan tampilan yang lebih konsisten di seluruh proyek karena menggunakan komponen yang telah didefinisikan, sedangkan Tailwind CSS memiliki memberikan fleksibilitas dan adaptabilitas tinggi terhadap proyek.
+
+Bootstrap memiliki pembelajaran yang lebih cepat untuk pemula karena dapat mulai dengan komponen yang telah didefinisikan, sedangkan Tailwind CSS memiliki pembelajaran yang lebih lambat karena memerlukan pemahaman terhadap kelas-kelas utilitas yang tersedia dan bagaimana menggabungkannya untuk mencapai tampilan yang diinginkan.
+
+Bootstrap sebaiknya digunakan saat masih pemula, atau hanya menginginkan tampilan yang lebih indah daripada tampilan template karena tampilan di tiap proyek cenderung akan mirip. Sedangkan Tailwind CSS digunakan saat sudah memahami kelas-kelas utilitas dan menginginkan tampilan yang berbeda di berbagai proyek.
+
+## Kustomisasi
+1. Menambah navigation bar di atas elemen <h1> di templates/main.html.
+```
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Navbar</span>
+            <a href="{% url 'main:logout' %}">
+                <form class="container-fluid justify-content-start">
+                    <button class="btn btn-outline-success me-2" type="button">Logout</button>
+                </form>
+            </a>
+        </div>
+    </nav>
+```
+
+2. Mengubah button di templates/main.html menjadi warna hijau.
+```
+<button class="btn btn-success" type="button">
+```
+
+3. Membuat elemen <th> dan <td> menjadi berada di tengah.
+```
+    <th style='text-align:center; vertical-align:middle'>
+    <td style='text-align:center; vertical-align:middle'>
+```
+
+4. Menambah border untuk membatasi tabel.
+```
+<table border="1">
+```
+
 # Tugas 4
 
 ## Mengimplementasikan fungsi registrasi, login, dan logout.
