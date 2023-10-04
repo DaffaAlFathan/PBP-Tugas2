@@ -3,10 +3,10 @@
 Element Selector memungkinkan kita mengubah properti untuk semua elemen yang memiliki tag HTML yang sama. Salah satu contoh yang paling berguna adalah saat kita ingin membuat seluruh elemen th dan td masing-masing memiliki properti yang sama.
 
 ## HTML5 Tags
-1. <header> digunakan untuk mendefinisikan header dari dokumen karena berkaitan dengan judul dan awalan.
-2. <nav> digunakan untuk membuat bar navigasi di bagian atas.
-3. <aside> digunakan untuk membuat konten di bagian samping.
-4. <footer> digunakan untuk membuat konten di bagian bawah.
+1. Tag header digunakan untuk mendefinisikan header dari dokumen karena berkaitan dengan judul dan awalan.
+2. Tag nav digunakan untuk membuat bar navigasi di bagian atas.
+3. Tag aside digunakan untuk membuat konten di bagian samping.
+4. Tag footer digunakan untuk membuat konten di bagian bawah.
 
 ## Perbedaan antara margin dan padding.
 Margin mengosongkan area di sekitar border, sedangkan padding mengosongkan area di sekitar konten.
@@ -19,7 +19,7 @@ Bootstrap memiliki pembelajaran yang lebih cepat untuk pemula karena dapat mulai
 Bootstrap sebaiknya digunakan saat masih pemula, atau hanya menginginkan tampilan yang lebih indah daripada tampilan template karena tampilan di tiap proyek cenderung akan mirip. Sedangkan Tailwind CSS digunakan saat sudah memahami kelas-kelas utilitas dan menginginkan tampilan yang berbeda di berbagai proyek.
 
 ## Kustomisasi
-1. Menambah navigation bar di atas elemen <h1> di templates/main.html.
+1. Menambah navigation bar di atas elemen h1 di templates/main.html.
 ```
     <nav class="navbar bg-body-tertiary">
         <div class="container-fluid">
@@ -38,7 +38,7 @@ Bootstrap sebaiknya digunakan saat masih pemula, atau hanya menginginkan tampila
 <button class="btn btn-success" type="button">
 ```
 
-3. Membuat elemen <th> dan <td> menjadi berada di tengah.
+3. Membuat elemen th dan td menjadi berada di tengah.
 ```
     <th style='text-align:center; vertical-align:middle'>
     <td style='text-align:center; vertical-align:middle'>
