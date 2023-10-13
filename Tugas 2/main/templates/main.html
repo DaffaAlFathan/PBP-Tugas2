@@ -23,7 +23,7 @@
     <p>{{ class }}<p>
     <h5>Kamu menyimpan {{type_count}} item pada aplikasi ini</h5>
     
-    <table border="1">
+    <table border="1" id="product_table">
         <tr>
             <th style='text-align:center; vertical-align:middle'>Name</th>
             <th style='text-align:center; vertical-align:middle'>Amount</th>
@@ -64,5 +64,32 @@
             Logout
         </button>
     </a> -->
+    <script>
+        async function getProducts() {
+            return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+        }
+        async function refreshProducts() {
+        document.getElementById("product_table").innerHTML = ""
+        const products = await getProducts()
+        let htmlString = `<tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Date Added</th>
+        </tr>`
+        products.forEach((item) => {
+            htmlString += `\n<tr>
+            <td>${item.fields.name}</td>
+            <td>${item.fields.price}</td>
+            <td>${item.fields.description}</td>
+            <td>${item.fields.date_added}</td>
+        </tr>` 
+        })
+        
+        document.getElementById("product_table").innerHTML = htmlString
+    }
+
+    refreshProducts()
+    </script>
     
 {% endblock content %}
